@@ -2,7 +2,7 @@ import React from 'react'
 import { Header } from '../components/Header'
 import { Heading, Text } from "@chakra-ui/react";
 
-function welcome() {
+const welcome = () => {
   return (
     <>
       <React.StrictMode>
