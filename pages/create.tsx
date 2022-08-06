@@ -22,7 +22,7 @@ import { useRouter } from "next/router";
 
 import { Header } from "../components/Header";
 import { todoListState } from "../constants/atom";
-import { useDateFormat } from "../hooks/useDateFormat";
+import { changeDateFormat } from "../util/changeDateFormat";
 
 type FormInput = {
   title: string;
@@ -49,8 +49,6 @@ export default function Create() {
   const [value, setValue] = useState("High");
   const [category, setCategory] = useState<category>("all");
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
-  // Dateをyyyy-mm-dd hh:mm形式にフォーマットする関数
-  const formatted_date = useDateFormat();
   const {
     handleSubmit,
     register,
@@ -78,7 +76,7 @@ export default function Create() {
         detail,
         status: 0,
         priority,
-        createAt: formatted_date(new Date()),
+        createAt: changeDateFormat(new Date()),
         updateAt: "",
         category,
       },
