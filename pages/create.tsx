@@ -22,6 +22,7 @@ import { useRouter } from "next/router";
 
 import { Header } from "../components/Header";
 import { todoListState } from "../constants/atom";
+import { changeDateFormat } from "../util/changeDateFormat";
 
 type FormInput = {
   title: string;
@@ -36,7 +37,8 @@ type todoList = {
   // 0:NOT STARTED、1:DOING、2:DONE
   status: null | 0 | 1 | 2;
   priority: null | string;
-  createAt: null | Date;
+  createAt: null | string;
+  updateAt: null | string;
   // all:TOPページ等に表示されるTODO LIST、draft:DRAFTページ、trash:trashページ
   category: "all" | "draft" | "trash";
 };
@@ -74,7 +76,8 @@ export default function Create() {
         detail,
         status: 0,
         priority,
-        createAt: new Date(),
+        createAt: changeDateFormat(new Date()),
+        updateAt: "",
         category,
       },
     ]);
