@@ -46,13 +46,18 @@ import {
 
 const Top = () => {
 	const [input, setInput] = useState("Text");
-	const [selectOne, setSelectOne] = useState("high");
-	const [selectTwo, setSelectTwo] = useState("low");
-	const [selectThree, setSelectThree] = useState("middle");
-	const [selectFour, setSelectFour] = useState("high");
-	const [selectFive, setSelectFive] = useState("high");
-	const [selectSix, setSelectSix] = useState("low");
-	const [buttonOne, setbuttonOne] = useState("NOT STARTED");
+	const [selectOne, setSelectOne] = useState("-------");
+	const [selectTwo, setSelectTwo] = useState("-------");
+	const [selectThree, setSelectThree] = useState("-------");
+	const [selectFour, setSelectFour] = useState("-------");
+	const [selectFive, setSelectFive] = useState("-------");
+	const [selectSix, setSelectSix] = useState("-------");
+	const [buttonOne, setButtonOne] = useState("NOT STARTED");
+	const [buttonTwo, setButtonTwo] = useState("NOT STARTED");
+	const [buttonThree, setButtonThree] = useState("NOT STARTED");
+	const [buttonFour, setButtonFour] = useState("NOT STARTED");
+	const [buttonFive, setButtonFive] = useState("NOT STARTED");
+	const [buttonSix, setButtonSix] = useState("NOT STARTED");
 
 	const pagesQuantity = 5;
 	const { currentPage, setCurrentPage } = usePaginator({
@@ -254,7 +259,14 @@ const Top = () => {
 												fontSize={`12px`}
 												fontWeight={`bold`}
 												fontFamily={`roboto`}
-												p={`0`}>
+												p={`0`}
+												onClick={
+													buttonOne === "NOT STARTED"
+														? () => setButtonOne("DOING")
+														: buttonOne === "DOING"
+														? () => setButtonOne("DONE")
+														: () => setButtonOne("NOT STARTED")
+												}>
 												{buttonOne}
 											</Button>
 										</Td>
@@ -298,8 +310,15 @@ const Top = () => {
 												w={`104px`}
 												h={`40px`}
 												borderRadius={`3xl`}
-												borderColor={`blackAlpha.800`}>
-												DOING
+												borderColor={`blackAlpha.800`}
+												onClick={
+													buttonTwo === "NOT STARTED"
+														? () => setButtonTwo("DOING")
+														: buttonTwo === "DOING"
+														? () => setButtonTwo("DONE")
+														: () => setButtonTwo("NOT STARTED")
+												}>
+												{buttonTwo}
 											</Button>
 										</Td>
 										<Td w={`139.2px`} p={`0`} lineHeight={`56px`}>
@@ -342,8 +361,15 @@ const Top = () => {
 												w={`104px`}
 												h={`40px`}
 												borderRadius={`3xl`}
-												borderColor={`blackAlpha.800`}>
-												DONE
+												borderColor={`blackAlpha.800`}
+												onClick={
+													buttonThree === "NOT STARTED"
+														? () => setButtonThree("DOING")
+														: buttonThree === "DOING"
+														? () => setButtonThree("DONE")
+														: () => setButtonThree("NOT STARTED")
+												}>
+												{buttonThree}
 											</Button>
 										</Td>
 										<Td w={`139.2px`} p={`0`} lineHeight={`56px`}>
@@ -386,8 +412,15 @@ const Top = () => {
 												w={`104px`}
 												h={`40px`}
 												borderRadius={`3xl`}
-												borderColor={`blackAlpha.800`}>
-												DOING
+												borderColor={`blackAlpha.800`}
+												onClick={
+													buttonFour === "NOT STARTED"
+														? () => setButtonFour("DOING")
+														: buttonFour === "DOING"
+														? () => setButtonFour("DONE")
+														: () => setButtonFour("NOT STARTED")
+												}>
+												{buttonFour}
 											</Button>
 										</Td>
 										<Td w={`139.2px`} p={`0`} lineHeight={`56px`}>
@@ -430,8 +463,15 @@ const Top = () => {
 												w={`104px`}
 												h={`40px`}
 												borderRadius={`3xl`}
-												borderColor={`blackAlpha.800`}>
-												DONE
+												borderColor={`blackAlpha.800`}
+												onClick={
+													buttonFive === "NOT STARTED"
+														? () => setButtonFive("DOING")
+														: buttonFive === "DOING"
+														? () => setButtonFive("DONE")
+														: () => setButtonFive("NOT STARTED")
+												}>
+												{buttonFive}
 											</Button>
 										</Td>
 										<Td w={`139.2px`} p={`0`} lineHeight={`56px`}>
@@ -474,8 +514,15 @@ const Top = () => {
 												w={`104px`}
 												h={`40px`}
 												borderRadius={`3xl`}
-												borderColor={`blackAlpha.800`}>
-												DOING
+												borderColor={`blackAlpha.800`}
+												onClick={
+													buttonSix === "NOT STARTED"
+														? () => setButtonSix("DOING")
+														: buttonSix === "DOING"
+														? () => setButtonSix("DONE")
+														: () => setButtonSix("NOT STARTED")
+												}>
+												{buttonSix}
 											</Button>
 										</Td>
 										<Td w={`139.2px`} p={`0`} lineHeight={`56px`}>

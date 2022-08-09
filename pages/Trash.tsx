@@ -16,7 +16,6 @@ import {
 	Td,
 	Tbody,
 	ButtonProps,
-	Stack,
 } from "@chakra-ui/react";
 
 import { Layout } from "../components/Layout";
