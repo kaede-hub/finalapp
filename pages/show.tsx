@@ -17,9 +17,14 @@ import {
   ModalHeader,
 } from "@chakra-ui/react";
 import { PenIcon } from "./penIcon";
+import { todoListState } from '../constants/atom'
+import { useRecoilValue } from 'recoil'
+
 
 export default function ShowPage() {
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const todoList = useRecoilValue<any>(todoListState);
+  console.log(todoList)
   return (
     <>
       <Header />
