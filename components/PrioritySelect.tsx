@@ -44,9 +44,9 @@ const PrioritySelect = ({ arrIndex, defaultValue }: Props) => {
         setSelectValue(e.target.value);
       }}
     >
-      <option value="high">High</option>
-      <option value="middle">Middle</option>
-      <option value="low">Low</option>
+      <option value="High">High</option>
+      <option value="Middle">Middle</option>
+      <option value="Low">Low</option>
     </Select>
   );
 };
