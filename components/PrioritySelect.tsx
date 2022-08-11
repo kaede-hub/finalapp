@@ -39,7 +39,7 @@ const PrioritySelect: React.FC<Props> = ({ arrIndex, defaultValue }) => {
       mx={`auto`}
       borderColor={`red.500`}
       borderRadius={`10px`}
-      defaultValue={defaultValue}
+      value={selectValue}
       onChange={(e) => {
         setSelectValue(e.target.value);
       }}
