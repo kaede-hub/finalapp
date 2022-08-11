@@ -11,19 +11,53 @@ type Props = {
 
 // arrIndexにはtodoListをmapした時のindex、defaultValueには該当のstatusを渡してください
 const StatusButton: React.FC<Props> = ({ arrIndex, defaultValue }) => {
-  const [statusValue, setStatusValue] = useState(defaultValue);
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
+  const [statusValue, setStatusValue] = useState(defaultValue);
+  const [content, setCntent] = useState("NOT STARTED");
+  const [color, setColor] = useState("blackAlpha.800");
+  const [bgColor, setBgColor] = useState("green.50");
+  const [fontSize, setFontSize] = useState("12px");
+
+  useEffect(() => {
+    switch (statusValue) {
+      case 1:
+        setCntent("DOING");
+        setColor("green.50");
+        setBgColor("green.600");
+        setFontSize("18px");
+        break;
+      case 2:
+        setCntent("DONE");
+        setColor("blackAlpha.800");
+        setBgColor("green.300");
+        setFontSize("18px");
+        break;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const statusButtonOnClick = () => {
     switch (statusValue) {
       case 0:
-        () => setStatusValue(1);
+        setStatusValue(1);
+        setCntent("DOING");
+        setColor("green.50");
+        setBgColor("green.600");
+        setFontSize("18px");
         break;
       case 1:
-        () => setStatusValue(2);
+        setStatusValue(2);
+        setCntent("DONE");
+        setColor("blackAlpha.800");
+        setBgColor("green.300");
+        setFontSize("18px");
         break;
       case 2:
-        () => setStatusValue(0);
+        setStatusValue(0);
+        setCntent("NOT STARTED");
+        setColor("blackAlpha.800");
+        setBgColor("green.50");
+        setFontSize("12px");
         break;
     }
   };
@@ -48,19 +82,21 @@ const StatusButton: React.FC<Props> = ({ arrIndex, defaultValue }) => {
 
   return (
     <Button
-      color={`blackAlpha.800`}
+      color={color}
       variant={`outline`}
-      bgColor={`green.50`}
+      bgColor={bgColor}
       w={`104px`}
       h={`40px`}
       borderRadius={`3xl`}
       borderColor={`blackAlpha.800`}
-      fontSize={`12px`}
+      fontSize={fontSize}
       fontWeight={`bold`}
       fontFamily={`roboto`}
       p={`0`}
       onClick={statusButtonOnClick}
-    ></Button>
+    >
+      {content}
+    </Button>
   );
 };
 
