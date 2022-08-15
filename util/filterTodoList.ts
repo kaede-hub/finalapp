@@ -15,7 +15,8 @@ export const filterTodoList = (
   todoList.filter((todo: any) => {
     if (
       (word === "" || todo.title.match(word)) &&
-      (status === 3 || todo.status === status)
+      (status === 3 || todo.status === status) &&
+      (prioritySelect === "" || todo.priority === prioritySelect)
     ) {
       filterTodos.push(todo);
     }
