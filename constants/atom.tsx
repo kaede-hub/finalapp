@@ -10,3 +10,11 @@ export const todoListState = atom({
   // 値の永続化
   effects_UNSTABLE: [persistAtom],
 });
+
+// 個別のTODOを保持。EditやShowで使用。
+export const todoItemState = atom({
+  key: "todoItem",
+  default: {},
+  // 値の永続化
+  effects_UNSTABLE: [persistAtom],
+});
