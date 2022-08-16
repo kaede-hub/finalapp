@@ -291,7 +291,7 @@ const Top = () => {
                 {/* 初期表示ではサーバサイドのレンダリング結果を採用し、マウント後に実行される副作用でクライアントサイドのレンダリング結果を反映 */}
                 {isClient && (
                   <Tbody>
-                    {filterTodos.map((todo, index) => {
+                    {filterTodos.map((todo) => {
                       return (
                         <Tr key={todo.id}>
                           <Td
@@ -322,13 +322,13 @@ const Top = () => {
                             lineHeight={`56px`}
                           >
                             <StatusButton
-                              arrIndex={index}
+                              arrIndex={todo.id - 1}
                               defaultValue={todo.status}
                             />
                           </Td>
                           <Td w={`139.2px`} p={`0`} lineHeight={`56px`}>
                             <PrioritySelect
-                              arrIndex={index}
+                              arrIndex={todo.id - 1}
                               defaultValue={todo.priority}
                             />
                           </Td>

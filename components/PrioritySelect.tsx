@@ -9,7 +9,6 @@ type Props = {
   defaultValue: string;
 };
 
-// arrIndexにはtodoListをmapした時のindex、defaultValueには該当のpriorityを渡してください
 const PrioritySelect: React.FC<Props> = ({ arrIndex, defaultValue }) => {
   const [selectValue, setSelectValue] = useState(defaultValue);
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);

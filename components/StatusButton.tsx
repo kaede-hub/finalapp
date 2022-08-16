@@ -9,7 +9,6 @@ type Props = {
   defaultValue: 0 | 1 | 2;
 };
 
-// arrIndexにはtodoListをmapした時のindex、defaultValueには該当のstatusを渡してください
 const StatusButton: React.FC<Props> = ({ arrIndex, defaultValue }) => {
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
   const [statusValue, setStatusValue] = useState(defaultValue);
