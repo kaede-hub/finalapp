@@ -116,6 +116,12 @@ const Top = () => {
     router.push(path);
   };
 
+  const resetButtonClick = () => {
+    setInput("");
+    setStatusSelect("");
+    setPrioritySelect("");
+  };
+
   return (
     <Layout title="TOP">
       <Container mt={`16px`}>
@@ -186,6 +192,7 @@ const Top = () => {
                     fontFamily={`roboto`}
                     fontWeight={`bold`}
                     ml={`24px`}
+                    onClick={resetButtonClick}
                   >
                     RESET
                   </Button>
