@@ -322,13 +322,13 @@ const Top = () => {
                             lineHeight={`56px`}
                           >
                             <StatusButton
-                              arrIndex={todo.id - 1}
+                              todoId={todo.id}
                               defaultValue={todo.status}
                             />
                           </Td>
                           <Td w={`139.2px`} p={`0`} lineHeight={`56px`}>
                             <PrioritySelect
-                              arrIndex={todo.id - 1}
+                              todoId={todo.id}
                               defaultValue={todo.priority}
                             />
                           </Td>

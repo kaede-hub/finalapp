@@ -5,11 +5,11 @@ import { useRecoilState } from "recoil";
 import { todoListState } from "../constants/atom";
 
 type Props = {
-  arrIndex: number;
+  todoId: number;
   defaultValue: 0 | 1 | 2;
 };
 
-const StatusButton: React.FC<Props> = ({ arrIndex, defaultValue }) => {
+const StatusButton: React.FC<Props> = ({ todoId, defaultValue }) => {
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
   const [statusValue, setStatusValue] = useState(defaultValue);
   const [content, setCntent] = useState("NOT STARTED");
@@ -62,8 +62,8 @@ const StatusButton: React.FC<Props> = ({ arrIndex, defaultValue }) => {
   };
 
   useEffect(() => {
-    const todos = todoList.map((todo: any, index: number) =>
-      arrIndex === index
+    const todos = todoList.map((todo: any) =>
+      todoId === todo.id
         ? {
             id: todo.id,
             title: todo.title,
