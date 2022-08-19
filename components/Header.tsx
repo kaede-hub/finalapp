@@ -4,6 +4,9 @@ import { useRouter } from "next/router";
 
 export const Header = () => {
   const router = useRouter();
+  const date = new Date();
+  const formatDate =
+    date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
   return (
     <Flex h="80px" bgColor="green.300" alignItems="center">
       <Heading
@@ -20,7 +23,7 @@ export const Header = () => {
       </Heading>
       <Spacer />
       <Text color="blackAlpha.800" mr="100px" fontSize="16px" fontWeight="bold">
-        2022/01/01
+        {formatDate}
       </Text>
     </Flex>
   );
