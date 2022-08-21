@@ -8,7 +8,10 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  Radio,
+  RadioGroup,
   Spacer,
+  Stack,
   Text,
   Textarea,
   VStack,
@@ -17,7 +20,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import { Header } from "../components/Header";
-import { todoListState } from "../constants/atom";
+import { todoListState, todoItemState } from "../constants/atom";
 
 type FormInput = {
   title: string;
@@ -44,13 +47,15 @@ export default function Edit() {
   const [value, setValue] = useState("High");
   const [category, setCategory] = useState<category>("all");
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
+  const [todoItem, setTodoItem] = useRecoilState<any>(todoItemState);
   const date = new Date()
   const year = date.getFullYear()
   const month = date.getMonth() + 1
   const day = date.getDate()
   const hours = date.getHours();
   const minutes = date.getMinutes()
-  
+  const [text, setText] = useState('');
+
   const {
     handleSubmit,
     register,
@@ -146,6 +151,9 @@ export default function Edit() {
                 borderWidth="1px"
                 borderColor="blackAlpha.800"
                 borderRadius="10px"
+                type="Text"
+                value={todoItem.title}
+                onChange={(e) => todoItem.title}
                 {...register("title", {
                   required: "TITLEは必須です",
                 })}
@@ -175,6 +183,7 @@ export default function Edit() {
                 borderWidth="1px"
                 borderColor="blackAlpha.800"
                 borderRadius="10px"
+                value={todoItem.detail}
                 {...register("detail", {
                   required: "DETAILは必須です",
                 })}
