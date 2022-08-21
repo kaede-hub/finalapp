@@ -5,18 +5,17 @@ import { Select } from "@chakra-ui/react";
 import { todoListState } from "../constants/atom";
 
 type Props = {
-  arrIndex: number;
+  todoId: number;
   defaultValue: string;
 };
 
-// arrIndexにはtodoListをmapした時のindex、defaultValueには該当のpriorityを渡してください
-const PrioritySelect: React.FC<Props> = ({ arrIndex, defaultValue }) => {
+const PrioritySelect: React.FC<Props> = ({ todoId, defaultValue }) => {
   const [selectValue, setSelectValue] = useState(defaultValue);
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
 
   useEffect(() => {
-    const todos = todoList.map((todo: any, index: number) =>
-      arrIndex === index
+    const todos = todoList.map((todo: any) =>
+      todoId === todo.id
         ? {
             id: todo.id,
             title: todo.title,
