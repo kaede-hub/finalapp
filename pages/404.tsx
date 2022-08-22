@@ -1,10 +1,12 @@
 import React from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { Button, Container, Text, VStack } from "@chakra-ui/react";
 
 import { Header } from "../components/Header";
 
 export default function Custom404() {
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -40,6 +42,7 @@ export default function Custom404() {
             borderWidth="1px"
             borderColor="blackAlpha.800"
             borderRadius="50px"
+            onClick={() => router.push("/Top")}
           >
             TOP
           </Button>

@@ -12,6 +12,9 @@ import {
 import { PenIcon } from "./penIcon";
 import { CommentModal } from "./commentModal";
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { todoItemState } from "../constants/atom";
+
 
 type commentObject = {
   name: string;
@@ -22,11 +25,17 @@ type commentObject = {
 export default function ShowPage() {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [comments, setComments] = useState<commentObject[]>([]);
+
+  const todoItem = useRecoilValue<any>(todoItemState);
+  const onClick = () => {
+    console.log({todoItem})
+  }
+
   const commentList = comments.map((comment) => {
     return (
       <Stack
-        borderWidth="1px"
-        borderColor="blackAlpha.800"
+      borderWidth="1px"
+      borderColor="blackAlpha.800"
         borderRadius="10px"
         fontWeight="bold"
       >
@@ -89,7 +98,7 @@ export default function ShowPage() {
                 fontWeight="bold"
                 color="blackAlpha.800"
                 border="none"
-              ></Text>
+              >{todoItem.title}</Text>
             </Box>
 
             <Box p="10px">
@@ -110,7 +119,7 @@ export default function ShowPage() {
                 fontWeight="bold"
                 color="blackAlpha.800"
                 border="none"
-              ></Text>
+              >{todoItem.detail}</Text>
             </Box>
             <HStack spacing="60px" p="10px" pb="20px">
               <Button
@@ -121,6 +130,7 @@ export default function ShowPage() {
                 borderColor="blackAlpha.800"
                 iconSpacing="10px"
                 rightIcon={<PenIcon />}
+                onClick={onClick}
               >
                 Edit
               </Button>
@@ -184,7 +194,12 @@ export default function ShowPage() {
           </Box>
         </Box>
       </Stack>
-      <CommentModal isOpen={isOpen} onClose={onClose} comments={comments} setComments={setComments}/>
+      <CommentModal
+        isOpen={isOpen}
+        onClose={onClose}
+        comments={comments}
+        setComments={setComments}
+      />
     </>
   );
 }
