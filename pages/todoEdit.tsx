@@ -41,9 +41,23 @@ type todoList = {
   category: "all" | "draft" | "trash";
 };
 
+type todoItem = {
+  id: null | number;
+  title: null | string;
+  detail: null | string;
+  // 0:NOT STARTED、1:DOING、2:DONE
+  status: null | 0 | 1 | 2;
+  priority: null | string;
+  createAt: null | Date;
+  EditAt: null | Date;
+  // all:TOPページ等に表示されるTODO LIST、draft:DRAFTページ、trash:trashページ
+  category: "all" | "draft" | "trash";
+};
+
 type category = "all" | "draft" | "trash";
 
 export default function Edit() {
+  const [todos, setTodos] = useState([]);
   const [value, setValue] = useState("High");
   const [category, setCategory] = useState<category>("all");
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
@@ -54,7 +68,8 @@ export default function Edit() {
   const day = date.getDate()
   const hours = date.getHours();
   const minutes = date.getMinutes()
-  const [text, setText] = useState('');
+  const onChangeTodoTitle=(event)=>setTodoItem(event.target.value)
+  const onChangeTodoDetail=(event)=>setTodoItem(event.target.value)
 
   const {
     handleSubmit,
@@ -75,8 +90,8 @@ export default function Edit() {
   };
 
   const onSubmit: SubmitHandler<FormInput> = ({ title, detail, priority }) => {
-    setTodoList((oldTodoList: Array<todoList>) => [
-      ...oldTodoList,
+    setTodoItem((oldTodoItem: Array<todoItem>) => [
+      ...oldTodoItem,
       {
         id: getId(),
         title,
@@ -153,10 +168,10 @@ export default function Edit() {
                 borderRadius="10px"
                 type="Text"
                 value={todoItem.title}
-                onChange={(e) => todoItem.title}
                 {...register("title", {
                   required: "TITLEは必須です",
                 })}
+                onChange={onChangeTodoTitle}
               />
               <FormErrorMessage>
                 {errors.title && errors.title.message}
@@ -187,6 +202,7 @@ export default function Edit() {
                 {...register("detail", {
                   required: "DETAILは必須です",
                 })}
+                onChange={onChangeTodoDetail}
               />
               <FormErrorMessage>
                 {errors.detail && errors.detail.message}
@@ -213,7 +229,7 @@ export default function Edit() {
                   lineHeight="20px"
                   color="blackAlpha.800"
                 >
-                  2020-11-8 18:55
+                 {todoItem.createAt}
                 </Text>
               </Flex>
 
