@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, ChangeEventHandler, useState } from "react";
 import Head from "next/head";
 import {
   Button,
@@ -21,6 +21,7 @@ import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import { Header } from "../components/Header";
 import { todoListState, todoItemState } from "../constants/atom";
+import { changeDateFormat } from "../util/changeDateFormat";
 
 type FormInput = {
   title: string;
@@ -36,7 +37,7 @@ type todoList = {
   status: null | 0 | 1 | 2;
   priority: null | string;
   createAt: null | Date;
-  EditAt: null | Date;
+  updateAt: null | Date;
   // all:TOPページ等に表示されるTODO LIST、draft:DRAFTページ、trash:trashページ
   category: "all" | "draft" | "trash";
 };
@@ -49,7 +50,7 @@ type todoItem = {
   status: null | 0 | 1 | 2;
   priority: null | string;
   createAt: null | Date;
-  EditAt: null | Date;
+  updateAt: null | Date;
   // all:TOPページ等に表示されるTODO LIST、draft:DRAFTページ、trash:trashページ
   category: "all" | "draft" | "trash";
 };
@@ -62,14 +63,8 @@ export default function Edit() {
   const [category, setCategory] = useState<category>("all");
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
   const [todoItem, setTodoItem] = useRecoilState<any>(todoItemState);
-  const date = new Date()
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const hours = date.getHours();
-  const minutes = date.getMinutes()
-  const onChangeTodoTitle=(event)=>setTodoItem(event.target.value)
-  const onChangeTodoDetail=(event)=>setTodoItem(event.target.value)
+  const onChangeTodoTitle=(event: ChangeEvent<HTMLInputElement>)=>setTodoItem({...todoItem, title: event.target.value})
+  const onChangeTodoDetail=(event: ChangeEvent<HTMLTextAreaElement> )=>setTodoItem({...todoItem, detail: event.target.value})
 
   const {
     handleSubmit,
@@ -90,24 +85,27 @@ export default function Edit() {
   };
 
   const onSubmit: SubmitHandler<FormInput> = ({ title, detail, priority }) => {
-    setTodoItem((oldTodoItem: Array<todoItem>) => [
+    setTodoItem((oldTodoItem:todoItem) => ({
       ...oldTodoItem,
-      {
+      
         id: getId(),
         title,
         detail,
         status: 0,
         priority,
-        EditAt: new Date(),
+        createAt:"",
+        updateAt: changeDateFormat(new Date()),
         category,
-      },
-    ]);
+      
+  }));
     if (category === "draft") {
       router.push("/draft");
     } else {
       router.push("/Top");
     }
   };
+
+  console.log(todoItem)
 
   return (
     <>
@@ -171,7 +169,7 @@ export default function Edit() {
                 {...register("title", {
                   required: "TITLEは必須です",
                 })}
-                onChange={onChangeTodoTitle}
+                onChange={(e)=>onChangeTodoTitle(e)}
               />
               <FormErrorMessage>
                 {errors.title && errors.title.message}
@@ -202,7 +200,7 @@ export default function Edit() {
                 {...register("detail", {
                   required: "DETAILは必須です",
                 })}
-                onChange={onChangeTodoDetail}
+                onChange={(e)=>onChangeTodoDetail(e)}
               />
               <FormErrorMessage>
                 {errors.detail && errors.detail.message}
@@ -249,7 +247,7 @@ export default function Edit() {
                   lineHeight="20px"
                   color="blackAlpha.800"
                 >
-                  <p>{`${year}-${month}-${day} ${hours}:${minutes}`}</p>
+                  <p>{todoItem.updateAt}</p>
                 </Text>
               </Flex>
             </Flex>
