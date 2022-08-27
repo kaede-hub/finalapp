@@ -73,31 +73,17 @@ export default function Edit() {
   } = useForm<FormInput>();
   const router = useRouter();
 
-  // idを取得する関数
-  const getId = () => {
-    if (todoList.length === 0) {
-      // todoListが空なら、1を返す
-      return 1;
-    } else {
-      // todoListが空でないなら、配列の最後に入っているidに+1した値を返す
-      return todoList[todoList.length - 1].id + 1;
-    }
-  };
-
   const onSubmit: SubmitHandler<FormInput> = ({ title, detail, priority }) => {
     setTodoItem((oldTodoItem:todoItem) => ({
-      ...oldTodoItem,
-      
-        id: getId(),
+      ...oldTodoItem,        
         title,
         detail,
         status: 0,
         priority,
-        createAt:"",
         updateAt: changeDateFormat(new Date()),
-        category,
-      
+
   }));
+    
     if (category === "draft") {
       router.push("/draft");
     } else {
@@ -105,7 +91,7 @@ export default function Edit() {
     }
   };
 
-  console.log(todoItem)
+  console.log(todoList.title)
 
   return (
     <>
