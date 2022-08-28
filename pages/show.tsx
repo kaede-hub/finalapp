@@ -1,7 +1,5 @@
 import { Header } from "../components/Header";
 import {
-  Input,
-  Textarea,
   Box,
   Flex,
   FormLabel,
@@ -10,16 +8,58 @@ import {
   Stack,
   HStack,
   useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalBody,
-  ModalHeader,
 } from "@chakra-ui/react";
 import { PenIcon } from "./penIcon";
+import { CommentModal } from "./commentModal";
+import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { todoItemState } from "../constants/atom";
+
+
+type commentObject = {
+  name: string;
+  comment: string;
+  createdAt: string;
+};
 
 export default function ShowPage() {
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const [comments, setComments] = useState<commentObject[]>([]);
+
+  const todoItem = useRecoilValue<any>(todoItemState);
+  const onClick = () => {
+    console.log({todoItem})
+  }
+
+  const commentList = comments.map((comment) => {
+    return (
+      <Stack
+      borderWidth="1px"
+      borderColor="blackAlpha.800"
+        borderRadius="10px"
+        fontWeight="bold"
+      >
+        <Flex
+          bgColor="green.700"
+          borderRadius="10px 10px 0 0"
+          borderBottom="1px solid black"
+          color="white"
+          justifyContent="space-between"
+        >
+          <Text ml="30px" fontSize="22px">
+            {comment.name}
+          </Text>
+          <Text mr="30px" fontSize="22px">
+            {comment.createdAt}
+          </Text>
+        </Flex>
+        <Text pb="60px" pl="10px">
+          {comment.comment}
+        </Text>
+      </Stack>
+    );
+  });
+
   return (
     <>
       <Header />
@@ -58,7 +98,7 @@ export default function ShowPage() {
                 fontWeight="bold"
                 color="blackAlpha.800"
                 border="none"
-              ></Text>
+              >{todoItem.title}</Text>
             </Box>
 
             <Box p="10px">
@@ -79,7 +119,7 @@ export default function ShowPage() {
                 fontWeight="bold"
                 color="blackAlpha.800"
                 border="none"
-              ></Text>
+              >{todoItem.detail}</Text>
             </Box>
             <HStack spacing="60px" p="10px" pb="20px">
               <Button
@@ -90,6 +130,7 @@ export default function ShowPage() {
                 borderColor="blackAlpha.800"
                 iconSpacing="10px"
                 rightIcon={<PenIcon />}
+                onClick={onClick}
               >
                 Edit
               </Button>
@@ -129,39 +170,7 @@ export default function ShowPage() {
             >
               Comment
             </Button>
-            <Modal isOpen={isOpen} onClose={onClose}>
-              <ModalOverlay />
-              <ModalContent w="390px" border="1px solid black" mt="150px" borderRadius="10px">
-                <ModalHeader fontWeight="bold" fontSize="30px" pt="5px" pb="0">
-                  Comment
-                </ModalHeader>
-                <ModalBody>
-                  <Text fontSize="20px" fontWeight="bold" pb="5px">
-                    Name
-                  </Text>
-                  <Input pb="5px" />
-                  <Text fontSize="20px" fontWeight="bold" pb="5px">
-                    Your Comment
-                  </Text>
-                  <Textarea
-                    mb="10px"
-                    borderColor="blackAlpha.800"
-                    h="160px"
-                    pb="5px"
-                  />
-                  <Button
-                    mb="15px"
-                    bgColor="green.600"
-                    color="white"
-                    fontSize="18px"
-                    border="1px solid black"
-                    w="100%"
-                  >
-                    CREATE
-                  </Button>
-                </ModalBody>
-              </ModalContent>
-            </Modal>
+
             <Button
               w="112px"
               h="40px"
@@ -178,107 +187,19 @@ export default function ShowPage() {
             </Button>
           </Flex>
           {/* List */}
-          <Stack mt="20px" ml="20px" spacing="32px">
-            <Stack
-              borderWidth="1px"
-              borderColor="blackAlpha.800"
-              borderRadius="10px"
-              fontWeight="bold"
-            >
-              <Flex
-                bgColor="green.700"
-                borderRadius="10px 10px 0 0"
-                borderBottom="1px solid black"
-                color="white"
-                justifyContent="space-between"
-              >
-                <Text ml="30px" fontSize="22px">
-                  ジョン
-                </Text>
-                <Text mr="30px" fontSize="22px">
-                  2022/01/01
-                </Text>
-              </Flex>
-
-              <Text pb="60px" pl="10px">
-                ２日後までに完了お願い致します。
-              </Text>
+          <Box my="20px" maxH="600px" overflow="scroll">
+            <Stack mt="20px" ml="20px" spacing="32px">
+              {comments.length ? commentList : <p>コメントがありません</p>}
             </Stack>
-            <Stack
-              borderWidth="1px"
-              borderColor="blackAlpha.800"
-              borderRadius="10px"
-              fontWeight="bold"
-            >
-              <Flex
-                bgColor="green.700"
-                borderRadius="10px 10px 0 0"
-                borderBottom="1px solid black"
-                color="white"
-                justifyContent="space-between"
-              >
-                <Text ml="30px" fontSize="22px">
-                  リンゴ
-                </Text>
-                <Text mr="30px" fontSize="22px">
-                  2022/01/01
-                </Text>
-              </Flex>
-              <Text pb="60px" pl="10px">
-                内容確認致しました。修正点メールしましたのでご確認ください。
-              </Text>
-            </Stack>
-            <Stack
-              borderWidth="1px"
-              borderColor="blackAlpha.800"
-              borderRadius="10px"
-              fontWeight="bold"
-            >
-              <Flex
-                bgColor="green.700"
-                borderRadius="10px 10px 0 0"
-                borderBottom="1px solid black"
-                color="white"
-                justifyContent="space-between"
-              >
-                <Text ml="30px" fontSize="22px">
-                  ポール
-                </Text>
-                <Text mr="30px" fontSize="22px">
-                  2022/01/01
-                </Text>
-              </Flex>
-              <Text pb="60px" pl="10px">
-                2日後までに完了お願い致します。
-              </Text>
-            </Stack>
-            <Stack
-              borderWidth="1px"
-              borderColor="blackAlpha.800"
-              borderRadius="10px"
-              fontWeight="bold"
-            >
-              <Flex
-                bgColor="green.700"
-                borderRadius="10px 10px 0 0"
-                borderBottom="1px solid black"
-                color="white"
-                justifyContent="space-between"
-              >
-                <Text ml="30px" fontSize="22px">
-                  ジョージ
-                </Text>
-                <Text mr="30px" fontSize="22px">
-                  2022/01/01
-                </Text>
-              </Flex>
-              <Text pb="60px" pl="10px">
-                ２日後までに完了お願い致します。
-              </Text>
-            </Stack>
-          </Stack>
+          </Box>
         </Box>
       </Stack>
+      <CommentModal
+        isOpen={isOpen}
+        onClose={onClose}
+        comments={comments}
+        setComments={setComments}
+      />
     </>
   );
 }

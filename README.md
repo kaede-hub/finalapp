@@ -14,6 +14,7 @@
   - taisei
   - Hiromichi
   - ハジメ
+  - カジ
 
 ## 使用技術
 
