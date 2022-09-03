@@ -74,15 +74,6 @@ export default function Edit() {
   const router = useRouter();
   
   const onSubmit: SubmitHandler<FormInput> = ({ title, detail, priority }) => {
-    const newArr = todoList.map((todo) => 
-    todo.id === todoItem.id ? { 
-      ...todo, 
-      title: todoItem.title ,
-      detail: todoItem.detail,
-      updateAt: todoItem.updateAt
-    } : todo);
-      setTodoList(newArr);
-      
     setTodoItem((oldTodoItem:todoItem) => ({
       ...oldTodoItem,        
         title,
@@ -92,6 +83,16 @@ export default function Edit() {
         updateAt: changeDateFormat(new Date()),
 
   }));
+    const newArr = todoList.map((todo) => 
+    todo.id === todoItem.id ? { 
+      ...todo, 
+      title: todoItem.title ,
+      detail: todoItem.detail,
+      updateAt: todoItem.updateAt
+    } : todo);
+      setTodoList(newArr);
+      
+    
     
     if (category === "draft") {
       router.push("/draft");
@@ -100,7 +101,7 @@ export default function Edit() {
     }
   };
 
-  console.log(todoList.title)
+  console.log(todoList.createAt)
 
   return (
     <>
