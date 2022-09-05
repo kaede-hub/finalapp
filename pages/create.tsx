@@ -77,7 +77,7 @@ export default function Create() {
         status: 0,
         priority,
         createAt: changeDateFormat(new Date()),
-        updateAt: "",
+        updateAt: changeDateFormat(new Date()),
         category,
       },
     ]);

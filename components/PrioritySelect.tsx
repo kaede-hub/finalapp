@@ -23,6 +23,7 @@ const PrioritySelect: React.FC<Props> = ({ todoId, defaultValue }) => {
             status: todo.status,
             priority: selectValue,
             createAt: todo.createAt,
+            updateAt: todo.updateAt,
             category: todo.category,
           }
         : todo
