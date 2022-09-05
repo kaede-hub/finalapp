@@ -129,7 +129,7 @@ export default function Edit() {
               borderWidth="1px"
               borderColor="blackAlpha.800"
               borderRadius="50px"
-              onClick={() => router.push("/Top")}
+              onClick={() => router.back()}
             >
               Back
             </Button>
