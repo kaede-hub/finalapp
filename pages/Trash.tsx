@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { todoListState, trashTodoState } from "../constants/atom";
@@ -24,7 +24,6 @@ import {
 } from "@chakra-ui/react";
 
 import { Layout } from "../components/Layout";
-
 import {
   Paginator,
   Previous,
@@ -34,6 +33,7 @@ import {
 } from "chakra-paginator";
 
 const Trash = () => {
+  const [paginationTodo, setPaginationTodo] = useState([]);
   const [trashTodo, setTrashTodo] = useRecoilState(trashTodoState);
   const [todoList, setTodoList] = useRecoilState(todoListState);
   const [isClient, setIsClient] = useState(false); //Topから引用 ハードコーディング
@@ -70,29 +70,29 @@ const Trash = () => {
   }, []);
 
   //削除機能（１タスクのみ）
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     const deleteTodo = trashTodo.filter(
-      (todo: { id: number }) => todo.id !== id
+      (todo: { id: string }) => todo.id !== id
     );
     setTrashTodo(deleteTodo);
   };
 
   //全削除機能
   const handleAllDelete = () => {
-    const allDeleteTodo = trashTodo.filter((todo: { id: any; }) => !todo.id);
+    const allDeleteTodo = trashTodo.filter((todo: { id: string }) => !todo.id);
     setTrashTodo(allDeleteTodo);
   };
 
   //戻す機能（TrashからTopへ）
-  const handleRestore = (id: number) => {
+  const handleRestore = (id: string) => {
     //Trashから削除処理
     const restoreTodo = trashTodo.filter(
-      (todo: { id: number }) => todo.id !== id
+      (todo: { id: string }) => todo.id !== id
     );
     setTrashTodo(restoreTodo);
     //TrashからTopへ戻す処理
     const newRestoreTodo = trashTodo.find(
-      (todo: { id: number }) => todo.id === id
+      (todo: { id: string }) => todo.id === id
     );
     const copyRestoreTodo = [...todoList];
     setTodoList([...copyRestoreTodo, newRestoreTodo]);
@@ -101,13 +101,26 @@ const Trash = () => {
   //全て戻す機能（TrashからTopへ）
   const handleAllRestore = () => {
     //Trashから全削除処理
-    const allRestoreTodo = trashTodo.filter((todo: { id: number }) => !todo.id);
-    setTrashTodo(allRestoreTodo)
+    const allRestoreTodo = trashTodo.filter((todo: { id: string }) => !todo.id);
+    setTrashTodo(allRestoreTodo);
     //TrashからTopへ全て戻す処理
-    const copyTrashTodo = [...trashTodo]
+    const copyTrashTodo = [...trashTodo];
     const copyTodoList = [...todoList];
     setTodoList([...copyTodoList, ...copyTrashTodo]);
   };
+
+  //0~5 6~11 12~17 18~23...
+  //1    2     3     4
+  //     +6    +12   +18
+  //      6*1   6*2   6*3
+  const pagination = useMemo(() => {
+
+    const startNumber = 0 + 6 * (currentPage - 1);
+    
+    const endNumber = 5 + 6 * (currentPage - 1);
+    
+    return trashTodo.slice(startNumber, endNumber);
+    }, [currentPage])
 
   return (
     <Layout title="Trash">
@@ -167,7 +180,7 @@ const Trash = () => {
                     fontFamily={`roboto`}
                     fontWeight={`bold`}
                     ml={`24px`}
-                    onClick={() => router.push("/Top")}
+                    onClick={() => router.back()}
                   >
                     Back
                   </Button>
@@ -236,7 +249,7 @@ const Trash = () => {
                 </Thead>
                 {isClient && (
                   <Tbody>
-                    {trashTodo.map((todo: any) => {
+                    {pagination.map((todo: any) => {
                       return (
                         <Tr key={todo.id}>
                           <Td

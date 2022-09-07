@@ -57,21 +57,21 @@ export default function Create() {
   const router = useRouter();
 
   // idを取得する関数
-  const getId = () => {
-    if (todoList.length === 0) {
-      // todoListが空なら、1を返す
-      return 1;
-    } else {
-      // todoListが空でないなら、配列の最後に入っているidに+1した値を返す
-      return todoList[todoList.length - 1].id + 1;
-    }
-  };
+  // const getId = () => {
+  //   if (todoList.length === 0) {
+  //     // todoListが空なら、1を返す
+  //     return 1;
+  //   } else {
+  //     // todoListが空でないなら、配列の最後に入っているidに+1した値を返す
+  //     return todoList[todoList.length - 1].id + 1;
+  //   }
+  // };
 
   const onSubmit: SubmitHandler<FormInput> = ({ title, detail, priority }) => {
     setTodoList((oldTodoList: Array<todoList>) => [
       ...oldTodoList,
       {
-        id: getId(),
+        id: Math.floor(Math.random() * 1000).toString(16),
         title,
         detail,
         status: 0,
