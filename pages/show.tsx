@@ -14,6 +14,7 @@ import { CommentModal } from "./commentModal";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { todoItemState } from "../constants/atom";
+import { useRouter } from "next/router";
 
 
 type commentObject = {
@@ -25,7 +26,8 @@ type commentObject = {
 export default function ShowPage() {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [comments, setComments] = useState<commentObject[]>([]);
-
+  const router = useRouter()
+  
   const todoItem = useRecoilValue<any>(todoItemState);
   const onClick = () => {
     console.log({todoItem})
@@ -130,7 +132,7 @@ export default function ShowPage() {
                 borderColor="blackAlpha.800"
                 iconSpacing="10px"
                 rightIcon={<PenIcon />}
-                onClick={onClick}
+                onClick={() => router.push("/todoEdit")}
               >
                 Edit
               </Button>
@@ -182,6 +184,7 @@ export default function ShowPage() {
               borderWidth="1px"
               borderColor="blackAlpha.800"
               borderRadius="50px"
+              onClick={() => router.back()}
             >
               Back
             </Button>

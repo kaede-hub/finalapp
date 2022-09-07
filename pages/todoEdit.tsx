@@ -1,22 +1,105 @@
-import React from "react";
+import React, { ChangeEvent, ChangeEventHandler, useState } from "react";
 import Head from "next/head";
 import {
-  Box,
   Button,
   Container,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Input,
+  Radio,
+  RadioGroup,
   Spacer,
+  Stack,
   Text,
   Textarea,
   VStack,
 } from "@chakra-ui/react";
-
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useRecoilState } from "recoil";
+import { useRouter } from "next/router";
 import { Header } from "../components/Header";
+import { todoListState, todoItemState } from "../constants/atom";
+import { changeDateFormat } from "../util/changeDateFormat";
 
-export default function TodoEdit() {
+type FormInput = {
+  title: string;
+  detail: string;
+  priority: string;
+};
+
+type todoList = {
+  id: null | number;
+  title: null | string;
+  detail: null | string;
+  // 0:NOT STARTED、1:DOING、2:DONE
+  status: null | 0 | 1 | 2;
+  priority: null | string;
+  createAt: null | Date;
+  updateAt: null | Date;
+  // all:TOPページ等に表示されるTODO LIST、draft:DRAFTページ、trash:trashページ
+  category: "all" | "draft" | "trash";
+};
+
+type todoItem = {
+  id: null | number;
+  title: null | string;
+  detail: null | string;
+  // 0:NOT STARTED、1:DOING、2:DONE
+  status: null | 0 | 1 | 2;
+  priority: null | string;
+  createAt: null | Date;
+  updateAt: null | Date;
+  // all:TOPページ等に表示されるTODO LIST、draft:DRAFTページ、trash:trashページ
+  category: "all" | "draft" | "trash";
+};
+
+type category = "all" | "draft" | "trash";
+
+export default function Edit() {
+  const [todos, setTodos] = useState([]);
+  const [value, setValue] = useState("High");
+  const [category, setCategory] = useState<category>("all");
+  const [todoList, setTodoList] = useRecoilState<any>(todoListState);
+  const [todoItem, setTodoItem] = useRecoilState<any>(todoItemState);
+  const onChangeTodoTitle=(event: ChangeEvent<HTMLInputElement>)=>setTodoItem({...todoItem, title: event.target.value})
+  const onChangeTodoDetail=(event: ChangeEvent<HTMLTextAreaElement> )=>setTodoItem({...todoItem, detail: event.target.value})
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<FormInput>();
+  const router = useRouter();
+  
+  const onSubmit: SubmitHandler<FormInput> = ({ title, detail, priority }) => {   
+    setTodoItem((oldTodoItem:todoItem) => ({
+      ...oldTodoItem,        
+        title,
+        detail,
+        status: 0,
+        priority,
+        updateAt: changeDateFormat(new Date()),
+  }));
+
+    const newArr = todoList.map((todo) => 
+      todo.id === todoItem.id ? { 
+      ...todo, 
+      title: todoItem.title ,
+      detail: todoItem.detail,
+      updateAt: changeDateFormat(new Date()),
+    } : todo);
+   
+    if (category === "draft") {
+      router.push("/draft");
+    } else {
+      router.push("/Top");
+    }
+  };
+
+  console.log(todoList.createAt)
+
   return (
     <>
       <Head>
@@ -46,55 +129,77 @@ export default function TodoEdit() {
               borderWidth="1px"
               borderColor="blackAlpha.800"
               borderRadius="50px"
+              onClick={() => router.back()}
             >
               Back
             </Button>
           </Flex>
-          <FormControl>
-            <FormLabel
-              m="0"
-              fontSize="24px"
-              fontWeight="bold"
-              lineHeight="24px"
-              color="blackAlpha.800"
-            >
-              TITLE
-            </FormLabel>
-            <Input
-              h="71px"
-              mt="5px"
-              p="8px 16px"
-              fontSize="20px"
-              fontWeight="bold"
-              color="blackAlpha.800"
-              borderWidth="1px"
-              borderColor="blackAlpha.800"
-              borderRadius="10px"
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel
-              // FormControlにmt:8pxがあるため、FormLabelのmtは8pxに設定
-              m="8px 0 0 0"
-              fontSize="24px"
-              fontWeight="bold"
-              lineHeight="24px"
-              color="blackAlpha.800"
-            >
-              DETAIL
-            </FormLabel>
-            <Textarea
-              h="287px"
-              mt="4px"
-              fontSize="20px"
-              fontWeight="bold"
-              color="blackAlpha.800"
-              borderWidth="1px"
-              borderColor="blackAlpha.800"
-              borderRadius="10px"
-            />
-          </FormControl>
-          <Flex w="100%">
+          <form style={{ width: "100%" }} onSubmit={handleSubmit(onSubmit)}>
+            <FormControl isInvalid={errors.title ? true : false}>
+              <FormLabel
+                m="0"
+                fontSize="24px"
+                fontWeight="bold"
+                lineHeight="24px"
+                color="blackAlpha.800"
+                htmlFor="title"
+              >
+                TITLE
+              </FormLabel>
+              <Input
+                id="title"
+                h="72px"
+                mt="4px"
+                p="8px 16px"
+                fontSize="24px"
+                fontWeight="bold"
+                color="blackAlpha.800"
+                borderWidth="1px"
+                borderColor="blackAlpha.800"
+                borderRadius="10px"
+                type="Text"
+                value={todoItem.title}
+                {...register("title", {
+                  required: "TITLEは必須です",
+                })}
+                onChange={(e)=>onChangeTodoTitle(e)}
+              />
+              <FormErrorMessage>
+                {errors.title && errors.title.message}
+              </FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={errors.detail ? true : false}>
+              <FormLabel
+                // FormControlにmt:8pxがあるため、FormLabelのmtは16pxに設定
+                m="16px 0 0 0"
+                fontSize="24px"
+                fontWeight="bold"
+                lineHeight="24px"
+                color="blackAlpha.800"
+              >
+                DETAIL
+              </FormLabel>
+              <Textarea
+                id="detail"
+                h="208px"
+                mt="4px"
+                fontSize="24px"
+                fontWeight="bold"
+                color="blackAlpha.800"
+                borderWidth="1px"
+                borderColor="blackAlpha.800"
+                borderRadius="10px"
+                value={todoItem.detail}
+                {...register("detail", {
+                  required: "DETAILは必須です",
+                })}
+                onChange={(e)=>onChangeTodoDetail(e)}
+              />
+              <FormErrorMessage>
+                {errors.detail && errors.detail.message}
+              </FormErrorMessage>
+            </FormControl>
+
             <Flex
               // Flexにmt:8pxがあるため、Buttonのmtは16pxに設定
               mt="16px"
@@ -115,9 +220,10 @@ export default function TodoEdit() {
                   lineHeight="20px"
                   color="blackAlpha.800"
                 >
-                  2020-11-8 18:55
+                 {todoItem.createAt}
                 </Text>
               </Flex>
+
               <Flex ml="27px" direction="column">
                 <Text
                   fontSize="16px"
@@ -134,28 +240,32 @@ export default function TodoEdit() {
                   lineHeight="20px"
                   color="blackAlpha.800"
                 >
-                  2020-11-8 18:55
+                  <p>{todoItem.updateAt}</p>
                 </Text>
               </Flex>
             </Flex>
-            <Spacer />
-            <Button
-              w="112px"
-              h="40px"
-              // Flexにmt:8pxがあるため、Buttonのmtは16pxに設定
-              mt="16px"
-              p="0"
-              fontSize="18px"
-              fontWeight="bold"
-              bg="green.600"
-              color="green.50"
-              borderWidth="1px"
-              borderColor="blackAlpha.800"
-              borderRadius="50px"
-            >
-              UPDATE
-            </Button>
-          </Flex>
+            
+            <Flex w="100%" flexDirection="row-reverse">
+              <Button
+                type="submit"
+                w="112px"
+                h="40px"
+                // Flexにmt:8pxがあるため、Buttonのmtは4pxに設定
+                m="4px 0 0 8px"
+                p="0"
+                fontSize="18px"
+                fontWeight="bold"
+                bg="green.600"
+                color="green.50"
+                borderWidth="1px"
+                borderColor="blackAlpha.800"
+                borderRadius="50px"
+                onClick={() => setCategory("all")}
+              >
+                UPDATE
+              </Button>
+            </Flex>
+          </form>
         </VStack>
       </Container>
     </>
