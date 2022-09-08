@@ -345,6 +345,7 @@ const Top = () => {
                             <StatusButton
                               todoId={todo.id}
                               defaultValue={todo.status}
+                              disabled={false}
                             />
                           </Td>
                           <Td w={`139.2px`} p={`0`} lineHeight={`56px`}>

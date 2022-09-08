@@ -7,9 +7,10 @@ import { todoListState } from "../constants/atom";
 type Props = {
   todoId: number;
   defaultValue: 0 | 1 | 2;
+  disabled: true | false
 };
 
-const StatusButton: React.FC<Props> = ({ todoId, defaultValue }) => {
+const StatusButton: React.FC<Props> = ({ todoId, defaultValue, disabled }) => {
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
   const [statusValue, setStatusValue] = useState(defaultValue);
   const [content, setCntent] = useState("NOT STARTED");
@@ -93,6 +94,7 @@ const StatusButton: React.FC<Props> = ({ todoId, defaultValue }) => {
       fontFamily={`roboto`}
       p={`0`}
       onClick={statusButtonOnClick}
+      disabled={disabled}
     >
       {content}
     </Button>

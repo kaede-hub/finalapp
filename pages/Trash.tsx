@@ -33,10 +33,9 @@ import {
 } from "chakra-paginator";
 
 const Trash = () => {
-  const [paginationTodo, setPaginationTodo] = useState([]);
   const [trashTodo, setTrashTodo] = useRecoilState(trashTodoState);
   const [todoList, setTodoList] = useRecoilState(todoListState);
-  const [isClient, setIsClient] = useState(false); //Topから引用 ハードコーディング
+  const [isClient, setIsClient] = useState(false); //Topから引用
   const router = useRouter();
   const pagesQuantity = 5;
   const { currentPage, setCurrentPage } = usePaginator({
@@ -109,18 +108,14 @@ const Trash = () => {
     setTodoList([...copyTodoList, ...copyTrashTodo]);
   };
 
-  //0~5 6~11 12~17 18~23...
-  //1    2     3     4
-  //     +6    +12   +18
-  //      6*1   6*2   6*3
+  //ページネーション機能
   const pagination = useMemo(() => {
-
     const startNumber = 0 + 6 * (currentPage - 1);
-    
+
     const endNumber = 5 + 6 * (currentPage - 1);
-    
+
     return trashTodo.slice(startNumber, endNumber);
-    }, [currentPage])
+  }, [currentPage, trashTodo]);
 
   return (
     <Layout title="Trash">
@@ -261,8 +256,12 @@ const Trash = () => {
                             {todo.title}
                           </Td>
                           <Td w={`174px`} h={`56px`} textAlign={`center`}>
-                            <StatusButton todoId={0} defaultValue={0}>
-                              {todo.status}
+                            <StatusButton
+                              todoId={todo.id}
+                              defaultValue={todo.status}
+                              disabled={true}
+
+                            >
                             </StatusButton>
                           </Td>
                           <Td
