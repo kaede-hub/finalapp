@@ -18,3 +18,10 @@ export const todoItemState = atom({
   // 値の永続化
   effects_UNSTABLE: [persistAtom],
 });
+// trashページでの配列
+export const trashTodoState = atom({
+  key: "trashTodo",
+  default: [],
+  // 値の永続化
+  effects_UNSTABLE: [persistAtom],
+});

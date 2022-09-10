@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import {
   DeleteIcon,
   EditIcon,
@@ -43,7 +43,7 @@ import {
 
 import { Layout } from "../components/Layout";
 import PrioritySelect from "../components/PrioritySelect";
-import { todoItemState, todoListState } from "../constants/atom";
+import { todoItemState, todoListState, trashTodoState } from "../constants/atom";
 import StatusButton from "../components/StatusButton";
 import { filterTodoList } from "../util/filterTodoList";
 
@@ -53,8 +53,9 @@ const Top = () => {
   const [prioritySelect, setPrioritySelect] = useState("");
   // サーバサイドとクライアントサイドのレンダリング結果の不一致解消のため導入
   const [isClient, setIsClient] = useState(false);
-  const todoList = useRecoilValue<any>(todoListState);
+  const [todoList, setTodoList] = useRecoilState(todoListState)
   const [todoItem, setTodoItem] = useRecoilState(todoItemState);
+  const [trashTodo, setTrashTodo] = useRecoilState(trashTodoState);
   const router = useRouter();
 
   const pagesQuantity = 5;
@@ -115,6 +116,19 @@ const Top = () => {
     });
     router.push(path);
   };
+  
+  //削除処理、TRASHページへ遷移
+  const handleDelete = (id: number) => {
+    //Topから削除処理
+    const deleteTodo = todoList.filter((todo: { id: number; }) => todo.id !== id)
+    setTodoList(deleteTodo)
+    //TopからTrashへ移動処理
+    const findTrashTodo = todoList.find((todo: { id: number; }) => todo.id === id)
+    const copyTrashTodo = [...trashTodo]
+    setTrashTodo(() => [
+      ...copyTrashTodo, findTrashTodo
+    ])
+  }
 
   const resetButtonClick = () => {
     setInput("");
@@ -331,6 +345,7 @@ const Top = () => {
                             <StatusButton
                               todoId={todo.id}
                               defaultValue={todo.status}
+                              disabled={false}
                             />
                           </Td>
                           <Td w={`139.2px`} p={`0`} lineHeight={`56px`}>
@@ -368,7 +383,7 @@ const Top = () => {
                                 _hover={{
                                   cursor: "pointer",
                                 }}
-                                onClick={() => router.push("/Trash")}
+                                onClick={() => handleDelete(todo.id)}
                               />
                             </HStack>
                           </Td>
