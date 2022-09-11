@@ -1,10 +1,5 @@
 import React from 'react';
-//import { useState } from 'react';
 import {auth} from '../firebase/firebaseConfig';
-import Signup from './Signup';
-import Link, { LinkProps } from 'next/link';
-
-//import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { Layout } from '../components/Layout';
 import {
@@ -15,8 +10,9 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from 'next/router';
 
-const login = () => {
+export default function Login () {
   const router = useRouter();
+
   const handleSubmit = (event: any) => {
     event.preventDefault();
     
@@ -24,11 +20,11 @@ const login = () => {
     signInWithEmailAndPassword(auth, email.value, password.value)
       .then((user) => {
         console.log('ログイン成功=', user.user.uid)
-        router.push("/Top");
+        router.push("/top");
       })
       .catch((error) => {
         console.error(error)
-      })    
+      })
   };
 
   return (
@@ -48,5 +44,3 @@ const login = () => {
     </Layout>
   );
 };
-
-export default login

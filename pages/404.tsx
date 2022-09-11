@@ -42,7 +42,7 @@ export default function Custom404() {
             borderWidth="1px"
             borderColor="blackAlpha.800"
             borderRadius="50px"
-            onClick={() => router.push("/Top")}
+            onClick={() => router.push("/top")}
           >
             TOP
           </Button>

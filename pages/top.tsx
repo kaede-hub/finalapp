@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   DeleteIcon,
   EditIcon,
@@ -43,18 +43,22 @@ import {
 
 import { Layout } from "../components/Layout";
 import PrioritySelect from "../components/PrioritySelect";
-import { todoItemState, todoListState, trashTodoState } from "../constants/atom";
+import {
+  todoItemState,
+  todoListState,
+  trashTodoState,
+} from "../constants/atom";
 import StatusButton from "../components/StatusButton";
 import { filterTodoList } from "../util/filterTodoList";
 
-const Top = () => {
+export default function Top () {
   const [input, setInput] = useState("");
   const [statusSelect, setStatusSelect] = useState("");
   const [prioritySelect, setPrioritySelect] = useState("");
   // サーバサイドとクライアントサイドのレンダリング結果の不一致解消のため導入
   const [isClient, setIsClient] = useState(false);
-  const [todoList, setTodoList] = useRecoilState(todoListState)
-  const [todoItem, setTodoItem] = useRecoilState(todoItemState);
+  const [todoList, setTodoList] = useRecoilState(todoListState);
+  const setTodoItem = useSetRecoilState(todoItemState);
   const [trashTodo, setTrashTodo] = useRecoilState(trashTodoState);
   const router = useRouter();
 
@@ -116,19 +120,21 @@ const Top = () => {
     });
     router.push(path);
   };
-  
+
   //削除処理、TRASHページへ遷移
   const handleDelete = (id: number) => {
-    //Topから削除処理
-    const deleteTodo = todoList.filter((todo: { id: number; }) => todo.id !== id)
-    setTodoList(deleteTodo)
-    //TopからTrashへ移動処理
-    const findTrashTodo = todoList.find((todo: { id: number; }) => todo.id === id)
-    const copyTrashTodo = [...trashTodo]
-    setTrashTodo(() => [
-      ...copyTrashTodo, findTrashTodo
-    ])
-  }
+    //topから削除処理
+    const deleteTodo = todoList.filter(
+      (todo: { id: number }) => todo.id !== id
+    );
+    setTodoList(deleteTodo);
+    //topからTrashへ移動処理
+    const findTrashTodo = todoList.find(
+      (todo: { id: number }) => todo.id === id
+    );
+    const copyTrashTodo = [...trashTodo];
+    setTrashTodo(() => [...copyTrashTodo, findTrashTodo]);
+  };
 
   const resetButtonClick = () => {
     setInput("");
@@ -223,7 +229,7 @@ const Top = () => {
                   borderColor={`gray.400`}
                   h={`40px`}
                   w={`40px`}
-                  onClick={() => router.push("/Trash")}
+                  onClick={() => router.push("/trash")}
                 />
                 <IconButton
                   aria-label="Edit"
@@ -234,7 +240,7 @@ const Top = () => {
                   variant={`outline`}
                   borderColor={`gray.400`}
                   icon={<EditIcon />}
-                  onClick={() => router.push("/todoEdit")}
+                  onClick={() => router.push("/edit")}
                 />
                 <IconButton
                   aria-label="New"
@@ -373,7 +379,7 @@ const Top = () => {
                                     todo.priority,
                                     todo.createAt,
                                     todo.updateAt,
-                                    "/todoEdit"
+                                    "/edit"
                                   )
                                 }
                               />
@@ -423,5 +429,3 @@ const Top = () => {
     </Layout>
   );
 };
-
-export default Top;

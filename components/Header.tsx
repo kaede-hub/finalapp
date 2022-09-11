@@ -18,7 +18,7 @@ export const Header = () => {
         _hover={{
           cursor: "pointer",
         }}
-        onClick={() => router.push("/Top")}
+        onClick={() => router.push("/top")}
       >
         TODO
       </Heading>

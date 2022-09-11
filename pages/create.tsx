@@ -17,7 +17,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { useRouter } from "next/router";
 
 import { Header } from "../components/Header";
@@ -30,7 +30,7 @@ type FormInput = {
   priority: string;
 };
 
-type todoList = {
+type TodoList = {
   id: null | number;
   title: null | string;
   detail: null | string;
@@ -48,7 +48,7 @@ type category = "all" | "draft" | "trash";
 export default function Create() {
   const [value, setValue] = useState("High");
   const [category, setCategory] = useState<category>("all");
-  const [todoList, setTodoList] = useRecoilState<any>(todoListState);
+  const setTodoList = useSetRecoilState<any>(todoListState);
   const {
     handleSubmit,
     register,
@@ -56,19 +56,8 @@ export default function Create() {
   } = useForm<FormInput>();
   const router = useRouter();
 
-  // idを取得する関数
-  // const getId = () => {
-  //   if (todoList.length === 0) {
-  //     // todoListが空なら、1を返す
-  //     return 1;
-  //   } else {
-  //     // todoListが空でないなら、配列の最後に入っているidに+1した値を返す
-  //     return todoList[todoList.length - 1].id + 1;
-  //   }
-  // };
-
   const onSubmit: SubmitHandler<FormInput> = ({ title, detail, priority }) => {
-    setTodoList((oldTodoList: Array<todoList>) => [
+    setTodoList((oldTodoList: Array<TodoList>) => [
       ...oldTodoList,
       {
         id: Math.floor(Math.random() * 1000).toString(16),
@@ -84,7 +73,7 @@ export default function Create() {
     if (category === "draft") {
       router.push("/draft");
     } else {
-      router.push("/Top");
+      router.push("/top");
     }
   };
 
@@ -117,7 +106,7 @@ export default function Create() {
               borderWidth="1px"
               borderColor="blackAlpha.800"
               borderRadius="50px"
-              onClick={() => router.push("/Top")}
+              onClick={() => router.push("/top")}
             >
               Back
             </Button>
