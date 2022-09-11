@@ -73,7 +73,7 @@ export default function Create() {
     if (category === "draft") {
       router.push("/draft");
     } else {
-      router.push("/Top");
+      router.push("/top");
     }
   };
 
@@ -106,7 +106,7 @@ export default function Create() {
               borderWidth="1px"
               borderColor="blackAlpha.800"
               borderRadius="50px"
-              onClick={() => router.push("/Top")}
+              onClick={() => router.push("/top")}
             >
               Back
             </Button>

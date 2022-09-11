@@ -26,19 +26,6 @@ type FormInput = {
   priority: string;
 };
 
-type todoList = {
-  id: null | number;
-  title: null | string;
-  detail: null | string;
-  // 0:NOT STARTED、1:DOING、2:DONE
-  status: null | 0 | 1 | 2;
-  priority: null | string;
-  createAt: null | Date;
-  updateAt: null | Date;
-  // all:TOPページ等に表示されるTODO LIST、draft:DRAFTページ、trash:trashページ
-  category: "all" | "draft" | "trash";
-};
-
 type TodoItem = {
   id: null | number;
   title: null | string;
@@ -90,11 +77,12 @@ export default function Edit() {
           }
         : todo
     );
-
+    setTodoList(newArr);
+    
     if (category === "draft") {
       router.push("/draft");
     } else {
-      router.push("/Top");
+      router.push("/top");
     }
   };
 

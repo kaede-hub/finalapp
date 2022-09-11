@@ -136,7 +136,7 @@ export default function ShowPage() {
                 borderColor="blackAlpha.800"
                 iconSpacing="10px"
                 rightIcon={<PenIcon />}
-                onClick={() => router.push("/todoEdit")}
+                onClick={() => router.push("/edit")}
               >
                 Edit
               </Button>

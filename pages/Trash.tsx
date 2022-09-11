@@ -32,10 +32,10 @@ import {
   usePaginator,
 } from "chakra-paginator";
 
-const Trash = () => {
+export default function Trash () {
   const [trashTodo, setTrashTodo] = useRecoilState(trashTodoState);
   const [todoList, setTodoList] = useRecoilState(todoListState);
-  const [isClient, setIsClient] = useState(false); //Topから引用
+  const [isClient, setIsClient] = useState(false); //topから引用
   const router = useRouter();
   const pagesQuantity = 5;
   const { currentPage, setCurrentPage } = usePaginator({
@@ -63,7 +63,7 @@ const Trash = () => {
     bg: "green.200",
   };
 
-  //Topから引用
+  //topから引用
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -84,12 +84,12 @@ const Trash = () => {
 
   //戻す機能（TrashからTopへ）
   const handleRestore = (id: string) => {
-    //Trashから削除処理
+    //trashから削除処理
     const restoreTodo = trashTodo.filter(
       (todo: { id: string }) => todo.id !== id
     );
     setTrashTodo(restoreTodo);
-    //TrashからTopへ戻す処理
+    //trashからTopへ戻す処理
     const newRestoreTodo = trashTodo.find(
       (todo: { id: string }) => todo.id === id
     );
@@ -99,10 +99,10 @@ const Trash = () => {
 
   //全て戻す機能（TrashからTopへ）
   const handleAllRestore = () => {
-    //Trashから全削除処理
+    //trashから全削除処理
     const allRestoreTodo = trashTodo.filter((todo: { id: string }) => !todo.id);
     setTrashTodo(allRestoreTodo);
-    //TrashからTopへ全て戻す処理
+    //trashからTopへ全て戻す処理
     const copyTrashTodo = [...trashTodo];
     const copyTodoList = [...todoList];
     setTodoList([...copyTodoList, ...copyTrashTodo]);
@@ -356,5 +356,3 @@ const Trash = () => {
     </Layout>
   );
 };
-
-export default Trash;
