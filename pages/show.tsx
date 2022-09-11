@@ -9,13 +9,12 @@ import {
   HStack,
   useDisclosure,
 } from "@chakra-ui/react";
-import { PenIcon } from "./penIcon";
-import { CommentModal } from "./commentModal";
+import { PenIcon } from "../components/PenIcon";
+import { CommentModal } from "../components/CommentModal";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { todoItemState } from "../constants/atom";
 import { useRouter } from "next/router";
-
 
 type commentObject = {
   name: string;
@@ -26,18 +25,19 @@ type commentObject = {
 export default function ShowPage() {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [comments, setComments] = useState<commentObject[]>([]);
-  const router = useRouter()
-  
+  const router = useRouter();
+
   const todoItem = useRecoilValue<any>(todoItemState);
   const onClick = () => {
-    console.log({todoItem})
-  }
+    console.log({ todoItem });
+  };
 
   const commentList = comments.map((comment) => {
     return (
       <Stack
-      borderWidth="1px"
-      borderColor="blackAlpha.800"
+        key={comment.name}
+        borderWidth="1px"
+        borderColor="blackAlpha.800"
         borderRadius="10px"
         fontWeight="bold"
       >
@@ -100,7 +100,9 @@ export default function ShowPage() {
                 fontWeight="bold"
                 color="blackAlpha.800"
                 border="none"
-              >{todoItem.title}</Text>
+              >
+                {todoItem.title}
+              </Text>
             </Box>
 
             <Box p="10px">
@@ -121,7 +123,9 @@ export default function ShowPage() {
                 fontWeight="bold"
                 color="blackAlpha.800"
                 border="none"
-              >{todoItem.detail}</Text>
+              >
+                {todoItem.detail}
+              </Text>
             </Box>
             <HStack spacing="60px" p="10px" pb="20px">
               <Button

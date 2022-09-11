@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   DeleteIcon,
   EditIcon,
@@ -43,7 +43,11 @@ import {
 
 import { Layout } from "../components/Layout";
 import PrioritySelect from "../components/PrioritySelect";
-import { todoItemState, todoListState, trashTodoState } from "../constants/atom";
+import {
+  todoItemState,
+  todoListState,
+  trashTodoState,
+} from "../constants/atom";
 import StatusButton from "../components/StatusButton";
 import { filterTodoList } from "../util/filterTodoList";
 
@@ -53,8 +57,8 @@ const Top = () => {
   const [prioritySelect, setPrioritySelect] = useState("");
   // サーバサイドとクライアントサイドのレンダリング結果の不一致解消のため導入
   const [isClient, setIsClient] = useState(false);
-  const [todoList, setTodoList] = useRecoilState(todoListState)
-  const [todoItem, setTodoItem] = useRecoilState(todoItemState);
+  const [todoList, setTodoList] = useRecoilState(todoListState);
+  const setTodoItem = useSetRecoilState(todoItemState);
   const [trashTodo, setTrashTodo] = useRecoilState(trashTodoState);
   const router = useRouter();
 
@@ -116,19 +120,21 @@ const Top = () => {
     });
     router.push(path);
   };
-  
+
   //削除処理、TRASHページへ遷移
   const handleDelete = (id: number) => {
     //Topから削除処理
-    const deleteTodo = todoList.filter((todo: { id: number; }) => todo.id !== id)
-    setTodoList(deleteTodo)
+    const deleteTodo = todoList.filter(
+      (todo: { id: number }) => todo.id !== id
+    );
+    setTodoList(deleteTodo);
     //TopからTrashへ移動処理
-    const findTrashTodo = todoList.find((todo: { id: number; }) => todo.id === id)
-    const copyTrashTodo = [...trashTodo]
-    setTrashTodo(() => [
-      ...copyTrashTodo, findTrashTodo
-    ])
-  }
+    const findTrashTodo = todoList.find(
+      (todo: { id: number }) => todo.id === id
+    );
+    const copyTrashTodo = [...trashTodo];
+    setTrashTodo(() => [...copyTrashTodo, findTrashTodo]);
+  };
 
   const resetButtonClick = () => {
     setInput("");

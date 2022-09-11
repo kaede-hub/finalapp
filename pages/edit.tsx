@@ -8,10 +8,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
-  Radio,
-  RadioGroup,
   Spacer,
-  Stack,
   Text,
   Textarea,
   VStack,
@@ -42,7 +39,7 @@ type todoList = {
   category: "all" | "draft" | "trash";
 };
 
-type todoItem = {
+type TodoItem = {
   id: null | number;
   title: null | string;
   detail: null | string;
@@ -58,13 +55,13 @@ type todoItem = {
 type category = "all" | "draft" | "trash";
 
 export default function Edit() {
-  const [todos, setTodos] = useState([]);
-  const [value, setValue] = useState("High");
   const [category, setCategory] = useState<category>("all");
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
   const [todoItem, setTodoItem] = useRecoilState<any>(todoItemState);
-  const onChangeTodoTitle=(event: ChangeEvent<HTMLInputElement>)=>setTodoItem({...todoItem, title: event.target.value})
-  const onChangeTodoDetail=(event: ChangeEvent<HTMLTextAreaElement> )=>setTodoItem({...todoItem, detail: event.target.value})
+  const onChangeTodoTitle = (event: ChangeEvent<HTMLInputElement>) =>
+    setTodoItem({ ...todoItem, title: event.target.value });
+  const onChangeTodoDetail = (event: ChangeEvent<HTMLTextAreaElement>) =>
+    setTodoItem({ ...todoItem, detail: event.target.value });
 
   const {
     handleSubmit,
@@ -72,25 +69,28 @@ export default function Edit() {
     formState: { errors },
   } = useForm<FormInput>();
   const router = useRouter();
-  
-  const onSubmit: SubmitHandler<FormInput> = ({ title, detail, priority }) => {   
-    setTodoItem((oldTodoItem:todoItem) => ({
-      ...oldTodoItem,        
-        title,
-        detail,
-        status: 0,
-        priority,
-        updateAt: changeDateFormat(new Date()),
-  }));
 
-    const newArr = todoList.map((todo) => 
-      todo.id === todoItem.id ? { 
-      ...todo, 
-      title: todoItem.title ,
-      detail: todoItem.detail,
+  const onSubmit: SubmitHandler<FormInput> = ({ title, detail, priority }) => {
+    setTodoItem((oldTodoItem: TodoItem) => ({
+      ...oldTodoItem,
+      title,
+      detail,
+      status: 0,
+      priority,
       updateAt: changeDateFormat(new Date()),
-    } : todo);
-   
+    }));
+
+    const newArr = todoList.map((todo: TodoItem) =>
+      todo.id === todoItem.id
+        ? {
+            ...todo,
+            title: todoItem.title,
+            detail: todoItem.detail,
+            updateAt: changeDateFormat(new Date()),
+          }
+        : todo
+    );
+
     if (category === "draft") {
       router.push("/draft");
     } else {
@@ -98,7 +98,7 @@ export default function Edit() {
     }
   };
 
-  console.log(todoList.createAt)
+  console.log(todoList.createAt);
 
   return (
     <>
@@ -162,7 +162,7 @@ export default function Edit() {
                 {...register("title", {
                   required: "TITLEは必須です",
                 })}
-                onChange={(e)=>onChangeTodoTitle(e)}
+                onChange={(e) => onChangeTodoTitle(e)}
               />
               <FormErrorMessage>
                 {errors.title && errors.title.message}
@@ -193,7 +193,7 @@ export default function Edit() {
                 {...register("detail", {
                   required: "DETAILは必須です",
                 })}
-                onChange={(e)=>onChangeTodoDetail(e)}
+                onChange={(e) => onChangeTodoDetail(e)}
               />
               <FormErrorMessage>
                 {errors.detail && errors.detail.message}
@@ -220,7 +220,7 @@ export default function Edit() {
                   lineHeight="20px"
                   color="blackAlpha.800"
                 >
-                 {todoItem.createAt}
+                  {todoItem.createAt}
                 </Text>
               </Flex>
 
@@ -244,7 +244,7 @@ export default function Edit() {
                 </Text>
               </Flex>
             </Flex>
-            
+
             <Flex w="100%" flexDirection="row-reverse">
               <Button
                 type="submit"
