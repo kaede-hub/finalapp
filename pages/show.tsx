@@ -28,9 +28,6 @@ export default function ShowPage() {
   const router = useRouter();
 
   const todoItem = useRecoilValue<any>(todoItemState);
-  const onClick = () => {
-    console.log({ todoItem });
-  };
 
   const commentList = comments.map((comment) => {
     return (

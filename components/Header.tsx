@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Heading, Spacer, Text } from "@chakra-ui/react";
+import { Button, Flex, Heading, Spacer, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 export const Header = () => {
@@ -7,6 +7,7 @@ export const Header = () => {
   const date = new Date();
   const formatDate =
     date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+    
   return (
     <Flex h="80px" bgColor="green.300" alignItems="center">
       <Heading
