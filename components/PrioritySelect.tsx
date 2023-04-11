@@ -44,9 +44,9 @@ const PrioritySelect: React.FC<Props> = ({ todoId, defaultValue }) => {
         setSelectValue(e.target.value);
       }}
     >
-      <option value="High">High</option>
-      <option value="Middle">Middle</option>
-      <option value="Low">Low</option>
+      <option value="High">高</option>
+      <option value="Middle">中</option>
+      <option value="Low">低</option>
     </Select>
   );
 };

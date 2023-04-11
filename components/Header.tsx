@@ -20,8 +20,8 @@ export const Header = () => {
         }}
         onClick={() => router.push("/top")}
       >
-        TODO
-      </Heading>
+        TODO APP
+      </ Heading>
       <Spacer />
       <Text color="blackAlpha.800" mr="100px" fontSize="16px" fontWeight="bold">
         {formatDate}

@@ -21,13 +21,13 @@ const StatusButton: React.FC<Props> = ({ todoId, defaultValue, disabled }) => {
   useEffect(() => {
     switch (statusValue) {
       case 1:
-        setCntent("DOING");
+        setCntent("進行中");
         setColor("green.50");
         setBgColor("green.600");
         setFontSize("18px");
         break;
       case 2:
-        setCntent("DONE");
+        setCntent("完了");
         setColor("blackAlpha.800");
         setBgColor("green.300");
         setFontSize("18px");
@@ -40,24 +40,24 @@ const StatusButton: React.FC<Props> = ({ todoId, defaultValue, disabled }) => {
     switch (statusValue) {
       case 0:
         setStatusValue(1);
-        setCntent("DOING");
+        setCntent("進行中");
         setColor("green.50");
         setBgColor("green.600");
         setFontSize("18px");
         break;
       case 1:
         setStatusValue(2);
-        setCntent("DONE");
+        setCntent("完了");
         setColor("blackAlpha.800");
         setBgColor("green.300");
         setFontSize("18px");
         break;
       case 2:
         setStatusValue(0);
-        setCntent("NOT STARTED");
+        setCntent("未完了");
         setColor("blackAlpha.800");
         setBgColor("green.50");
-        setFontSize("12px");
+        setFontSize("18px");
         break;
     }
   };

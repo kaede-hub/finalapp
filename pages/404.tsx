@@ -21,7 +21,7 @@ export default function Custom404() {
             lineHeight="75px"
             color="blackAlpha.800"
           >
-            404
+            Welcome to TODO APP!!
           </Text>
           <Text
             fontSize="24px"
@@ -29,7 +29,7 @@ export default function Custom404() {
             lineHeight="29px"
             color="blackAlpha.800"
           >
-            This is not the web page you are looking for.
+            This WebSite is TODO APP.
           </Text>
           <Button
             w="112px"

@@ -70,7 +70,7 @@ export default function ShowPage() {
             lineHeight="33px"
             color="blackAlpha.800"
           >
-            SHOW TODO
+            詳細
           </Text>
           <Box
             borderWidth="1px"
@@ -89,7 +89,7 @@ export default function ShowPage() {
                 color="blackAlpha.800"
                 bgColor="green.300"
               >
-                TITLE
+                タイトル
               </FormLabel>
               <Text
                 h="30px"
@@ -111,7 +111,7 @@ export default function ShowPage() {
                 color="blackAlpha.800"
                 bgColor="green.300"
               >
-                DETAIL
+                詳細
               </FormLabel>
               <Text
                 h="350px"
@@ -135,17 +135,17 @@ export default function ShowPage() {
                 rightIcon={<PenIcon />}
                 onClick={() => router.push("/edit")}
               >
-                Edit
+                編集
               </Button>
 
               <Flex direction="column">
-                <Text fontWeight="bold">Create</Text>
+                <Text fontWeight="bold">作成時間</Text>
                 <Text fontWeight="bold" fontSize="20px">
                   2020-11-8 18:55
                 </Text>
               </Flex>
               <Flex direction="column">
-                <Text fontWeight="bold">Update</Text>
+                <Text fontWeight="bold">更新時間</Text>
                 <Text fontWeight="bold" fontSize="20px">
                   2020-11-8 18:55
                 </Text>
@@ -171,7 +171,7 @@ export default function ShowPage() {
               borderRadius="50px"
               onClick={onOpen}
             >
-              Comment
+              コメント
             </Button>
 
             <Button
@@ -187,7 +187,7 @@ export default function ShowPage() {
               borderRadius="50px"
               onClick={() => router.back()}
             >
-              Back
+              戻る
             </Button>
           </Flex>
           {/* List */}

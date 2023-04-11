@@ -51,6 +51,7 @@ import {
 import StatusButton from "../components/StatusButton";
 import { filterTodoList } from "../util/filterTodoList";
 
+
 export default function Top () {
   const [input, setInput] = useState("");
   const [statusSelect, setStatusSelect] = useState("");
@@ -160,16 +161,16 @@ export default function Top () {
                 </Text>
                 <Flex w={`624px`}>
                   <Text fontSize={`18px`} fontWeight={`bold`} w={`180px`}>
-                    SEARCH
+                    検索
                   </Text>
                   <Text fontSize={`18px`} fontWeight={`bold`} w={`180px`}>
-                    STATUS
+                    状況
                   </Text>
                   <Text fontSize={`18px`} fontWeight={`bold`}>
-                    PRIORITY
+                    優先度
                   </Text>
                 </Flex>
-                <Flex>
+                <Flex w={`680px`} mb={`33px`}>
                   <HStack spacing={4}>
                     <InputGroup>
                       <InputRightElement pointerEvents="none">
@@ -186,9 +187,9 @@ export default function Top () {
                       value={statusSelect}
                       onChange={(e) => setStatusSelect(e.target.value)}
                     >
-                      <option value={0}>NOT STARTED</option>
-                      <option value={1}>DOING</option>
-                      <option value={2}>DONE</option>
+                      <option value={0}>未完了</option>
+                      <option value={1}>進行中</option>
+                      <option value={2}>完了</option>
                     </Select>
                     <Select
                       placeholder="-------"
@@ -214,7 +215,7 @@ export default function Top () {
                     ml={`24px`}
                     onClick={resetButtonClick}
                   >
-                    RESET
+                    リセット
                   </Button>
                 </Flex>
               </Stack>
@@ -266,7 +267,7 @@ export default function Top () {
                       color={`blackAlpha.800`}
                       py={`19px`}
                     >
-                      Task
+                      タスク
                     </Th>
                     <Th
                       fontFamily={`roboto`}
@@ -275,7 +276,7 @@ export default function Top () {
                       color={`blackAlpha.800`}
                       py={`19px`}
                     >
-                      Status
+                      状況
                     </Th>
                     <Th
                       fontFamily={`roboto`}
@@ -284,7 +285,7 @@ export default function Top () {
                       color={`blackAlpha.800`}
                       py={`19px`}
                     >
-                      Priority
+                      優先度
                     </Th>
                     <Th
                       fontFamily={`roboto`}
@@ -293,7 +294,7 @@ export default function Top () {
                       color={`blackAlpha.800`}
                       py={`19px`}
                     >
-                      Create
+                      作成時間
                     </Th>
                     <Th
                       fontFamily={`roboto`}
@@ -302,7 +303,7 @@ export default function Top () {
                       color={`blackAlpha.800`}
                       py={`19px`}
                     >
-                      Update
+                      更新時間
                     </Th>
                     <Th
                       fontFamily={`roboto`}
@@ -311,7 +312,7 @@ export default function Top () {
                       color={`blackAlpha.800`}
                       py={`19px`}
                     >
-                      Action
+                      編集・削除
                     </Th>
                   </Tr>
                 </Thead>

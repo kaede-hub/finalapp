@@ -104,7 +104,7 @@ export default function Edit() {
               lineHeight="33px"
               color="blackAlpha.800"
             >
-              EDIT TODO
+              編集
             </Text>
             <Spacer />
             <Button
@@ -120,7 +120,7 @@ export default function Edit() {
               borderRadius="50px"
               onClick={() => router.back()}
             >
-              Back
+              戻る
             </Button>
           </Flex>
           <form style={{ width: "100%" }} onSubmit={handleSubmit(onSubmit)}>
@@ -133,7 +133,7 @@ export default function Edit() {
                 color="blackAlpha.800"
                 htmlFor="title"
               >
-                TITLE
+                タイトル
               </FormLabel>
               <Input
                 id="title"
@@ -166,7 +166,7 @@ export default function Edit() {
                 lineHeight="24px"
                 color="blackAlpha.800"
               >
-                DETAIL
+                詳細
               </FormLabel>
               <Textarea
                 id="detail"
@@ -200,7 +200,7 @@ export default function Edit() {
                   lineHeight="16px"
                   color="blackAlpha.800"
                 >
-                  Create
+                  作成時間
                 </Text>
                 <Text
                   mt="4px"
@@ -220,7 +220,7 @@ export default function Edit() {
                   lineHeight="16px"
                   color="blackAlpha.800"
                 >
-                  Update
+                  更新時間
                 </Text>
                 <Text
                   mt="4px"
@@ -251,7 +251,7 @@ export default function Edit() {
                 borderRadius="50px"
                 onClick={() => setCategory("all")}
               >
-                UPDATE
+                更新
               </Button>
             </Flex>
           </form>

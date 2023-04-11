@@ -92,7 +92,7 @@ export default function Create() {
               lineHeight="33px"
               color="blackAlpha.800"
             >
-              NEW TODO
+              TODO作成
             </Text>
             <Spacer />
             <Button
@@ -108,7 +108,7 @@ export default function Create() {
               borderRadius="50px"
               onClick={() => router.push("/top")}
             >
-              Back
+              戻る
             </Button>
           </Flex>
           <form style={{ width: "100%" }} onSubmit={handleSubmit(onSubmit)}>
@@ -121,7 +121,7 @@ export default function Create() {
                 color="blackAlpha.800"
                 htmlFor="title"
               >
-                TITLE
+                タイトル  
               </FormLabel>
               <Input
                 id="title"
@@ -151,7 +151,7 @@ export default function Create() {
                 lineHeight="24px"
                 color="blackAlpha.800"
               >
-                DETAIL
+                詳細
               </FormLabel>
               <Textarea
                 id="detail"
@@ -179,7 +179,7 @@ export default function Create() {
                 lineHeight="24px"
                 color="blackAlpha.800"
               >
-                PRIORITY
+                優先度
               </FormLabel>
               <RadioGroup mt="4px" onChange={setValue} value={value}>
                 <Stack h="28px" spacing="24px" direction="row">
@@ -190,7 +190,7 @@ export default function Create() {
                       lineHeight="28px"
                       color="blackAlpha.800"
                     >
-                      High
+                      高
                     </Text>
                   </Radio>
                   <Radio value="Middle" {...register("priority")}>
@@ -200,7 +200,7 @@ export default function Create() {
                       lineHeight="28px"
                       color="blackAlpha.800"
                     >
-                      Middle
+                      中
                     </Text>
                   </Radio>
                   <Radio value="Low" {...register("priority")}>
@@ -210,7 +210,7 @@ export default function Create() {
                       lineHeight="28px"
                       color="blackAlpha.800"
                     >
-                      Low
+                      低
                     </Text>
                   </Radio>
                 </Stack>
@@ -233,7 +233,7 @@ export default function Create() {
                 borderRadius="50px"
                 onClick={() => setCategory("all")}
               >
-                CREATE
+                作成
               </Button>
               <Button
                 type="submit"
@@ -251,7 +251,7 @@ export default function Create() {
                 borderRadius="50px"
                 onClick={() => setCategory("draft")}
               >
-                DRAFT
+                下書き
               </Button>
             </Flex>
           </form>

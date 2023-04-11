@@ -131,7 +131,7 @@ export default function Trash () {
                   lineHeight="33px"
                   color="blackAlpha.800"
                 >
-                  TRASH
+                  ゴミ箱
                 </Text>
                 <Flex justify={"end"} align={"center"}>
                   <Button
@@ -146,7 +146,7 @@ export default function Trash () {
                     fontWeight={`bold`}
                     onClick={handleAllDelete}
                   >
-                    Delete all
+                    全削除
                   </Button>
                   <Button
                     color={`white`}
@@ -161,7 +161,7 @@ export default function Trash () {
                     ml={`24px`}
                     onClick={handleAllRestore}
                   >
-                    Resotre all
+                    全修復
                   </Button>
                   <Button
                     color={`white`}
@@ -177,7 +177,7 @@ export default function Trash () {
                     ml={`24px`}
                     onClick={() => router.back()}
                   >
-                    Back
+                    戻る
                   </Button>
                 </Flex>
               </Flex>
@@ -194,7 +194,7 @@ export default function Trash () {
                       pt={`20px`}
                       w={`384px`}
                     >
-                      Task
+                      タスク
                     </Th>
                     <Th
                       textAlign={`center`}
@@ -205,7 +205,7 @@ export default function Trash () {
                       pt={`20px`}
                       w={`174px`}
                     >
-                      Status
+                      状況
                     </Th>
                     <Th
                       textAlign={`center`}
@@ -216,7 +216,7 @@ export default function Trash () {
                       pt={`20px`}
                       w={`174px`}
                     >
-                      Priority
+                      優先度
                     </Th>
                     <Th
                       textAlign={`center`}
@@ -227,7 +227,7 @@ export default function Trash () {
                       pt={`20px`}
                       w={`174px`}
                     >
-                      Create
+                      作成時間
                     </Th>
                     <Th
                       textAlign={`center`}
@@ -238,7 +238,7 @@ export default function Trash () {
                       pt={`20px`}
                       w={`174px`}
                     >
-                      Action
+                      削除・修復
                     </Th>
                   </Tr>
                 </Thead>
@@ -301,7 +301,7 @@ export default function Trash () {
                                 p={`0`}
                                 onClick={() => handleDelete(todo.id)}
                               >
-                                Delete
+                                削除
                               </Button>
                               <Button
                                 color={`white`}
@@ -316,7 +316,7 @@ export default function Trash () {
                                 p={`0`}
                                 onClick={() => handleRestore(todo.id)}
                               >
-                                Restore
+                                修復
                               </Button>
                             </HStack>
                           </Td>
